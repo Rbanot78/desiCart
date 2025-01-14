@@ -3,12 +3,14 @@ import { FaStar, FaRegClone, FaHeart, FaCartPlus } from "react-icons/fa";
 import Link from "next/link";
 import { useCompare } from "@/context/CompareContext";
 import { useApp } from "@/context/AppContext";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 const ProductCard = ({ product }) => {
-  const { images, title, price, rating, discountPercentage, id, category } = product;
+  const { images, title, price, rating, discountPercentage, id, category } =
+    product;
   const { addToCompare, compareItems } = useCompare();
-  const { addToCart, addToWishlist, isProductInCart, isProductInWishlist } = useApp();
+  const { addToCart, addToWishlist, isProductInCart, isProductInWishlist } =
+    useApp();
 
   const [mainImage, setMainImage] = useState(
     images && images.length > 0 ? images[0] : "/default-product.jpg"
@@ -27,9 +29,12 @@ const ProductCard = ({ product }) => {
     }
   };
 
-  const handleAddToWishlist = () => {
+  const handleAddToWishlist = (e) => {
+    e.stopPropagation(); // Prevent event from bubbling up to the Link component
     if (isProductInWishlist(id)) {
       toast.error("This product is already in your wishlist!");
+    } else if (isProductInCart(id)) {
+      toast.error("This product is already in your cart!");
     } else {
       addToWishlist(product);
       toast.success("Product added to your wishlist!");
@@ -41,7 +46,10 @@ const ProductCard = ({ product }) => {
       toast.error("You can only compare up to 3 products!");
     } else if (compareItems.some((item) => item.id === id)) {
       toast.error("This product is already in the comparison list!");
-    } else if (compareItems.length > 0 && compareItems[0].category !== category) {
+    } else if (
+      compareItems.length > 0 &&
+      compareItems[0].category !== category
+    ) {
       toast.error("You can only compare products from the same category!");
     } else {
       addToCompare(product);
@@ -64,16 +72,21 @@ const ProductCard = ({ product }) => {
               {discountPercentage}% OFF
             </div>
           )}
-          <div className="absolute top-2 right-2">
-            <button
-              onClick={(e) => { e.stopPropagation(); handleAddToWishlist(); }}
-              className="bg-white p-1 rounded-full shadow-md hover:bg-gray-200 transition duration-300"
-            >
-              <FaHeart className={`text-red-600 ${isProductInWishlist(id) ? 'opacity-50' : ''}`} />
-            </button>
-          </div>
         </div>
       </Link>
+      <div className="absolute top-2 right-2">
+        <button
+          onClick={handleAddToWishlist}
+          className="bg-white p-1 rounded-full shadow-md hover:bg-gray-200 transition duration-300"
+        >
+          <FaHeart
+            className={`text-red-600 ${
+              isProductInWishlist(id) ? "opacity-50" : ""
+            }`}
+          />
+        </button>
+      </div>
+
       <div className="p-4">
         <h3 className="text-lg sm:text-xl font-semibold text-gray-800 truncate">
           {title}
@@ -99,29 +112,51 @@ const ProductCard = ({ product }) => {
             {[...Array(5)].map((_, index) => (
               <FaStar
                 key={index}
-                className={`h-4 w-4 sm:h-5 sm:w-5 ${index < rating ? "text-yellow-500" : "text-gray-300"}`}
+                className={`h-4 w-4 sm:h-5 sm:w-5 ${
+                  index < rating ? "text-yellow-500" : "text-gray-300"
+                }`}
               />
             ))}
           </div>
-          <span className="ml-2 text-sm sm:text-base text-gray-500">{rating}</span>
+          <span className="ml-2 text-sm sm:text-base text-gray-500">
+            {rating}
+          </span>
         </div>
       </div>
       <div className="p-4 flex justify-between items-center">
         <button
           onClick={handleAddToCompare}
-          disabled={compareItems.some((item) => item.id === id) || (compareItems.length > 0 && compareItems[0].category !== category) || compareItems.length >= 3}
-          className={`flex items-center text-sm py-2 px-4 rounded-lg transition duration-300 ${compareItems.some((item) => item.id === id) || (compareItems.length > 0 && compareItems[0].category !== category) || compareItems.length >= 3 ? 'bg-gray-400 text-gray-800 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+          disabled={
+            compareItems.some((item) => item.id === id) ||
+            (compareItems.length > 0 &&
+              compareItems[0].category !== category) ||
+            compareItems.length >= 3
+          }
+          className={`flex items-center text-sm py-2 px-4 rounded-lg transition duration-300 ${
+            compareItems.some((item) => item.id === id) ||
+            (compareItems.length > 0 &&
+              compareItems[0].category !== category) ||
+            compareItems.length >= 3
+              ? "bg-gray-400 text-gray-800 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+          }`}
         >
           <FaRegClone className="mr-2" />
-          {compareItems.some((item) => item.id === id) ? 'In Compare' : 'Compare'}
+          {compareItems.some((item) => item.id === id)
+            ? "In Compare"
+            : "Compare"}
         </button>
         <button
           onClick={handleAddToCart}
           disabled={isProductInCart(id)}
-          className={`flex items-center text-sm py-2 px-4 rounded-lg transition duration-300 ${isProductInCart(id) ? 'bg-gray-400 text-gray-800 cursor-not-allowed' : 'bg-green-600 text-white hover:bg-green-700'}`}
+          className={`flex items-center text-sm py-2 px-4 rounded-lg transition duration-300 ${
+            isProductInCart(id)
+              ? "bg-gray-400 text-gray-800 cursor-not-allowed"
+              : "bg-green-600 text-white hover:bg-green-700"
+          }`}
         >
           <FaCartPlus className="mr-2" />
-          {isProductInCart(id) ? 'In Cart' : 'Add to Cart'}
+          {isProductInCart(id) ? "In Cart" : "Add to Cart"}
         </button>
       </div>
     </div>

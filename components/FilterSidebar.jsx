@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { FaBars, FaTimes } from 'react-icons/fa'; // Hamburger and Close icons
+import { FaTimes } from 'react-icons/fa'; // Close icon
 
-const FilterSidebar = ({ brands, onFilterChange }) => {
+const FilterSidebar = ({ brands, onFilterChange, isSidebarOpen, setIsSidebarOpen }) => {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // For toggling sidebar visibility
 
   const handleBrandChange = (brand) => {
     setSelectedBrands((prev) =>
@@ -26,15 +25,7 @@ const FilterSidebar = ({ brands, onFilterChange }) => {
   }, [selectedBrands, minPrice, maxPrice]);
 
   return (
-    <div className="relative">
-      {/* Hamburger Icon for mobile */}
-      <button
-        className="sm:hidden p-2 bg-blue-600 text-white rounded-full"
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-      >
-        <FaBars className="text-xl" />
-      </button>
-
+    <div className="mb-6">
       {/* Sidebar */}
       <div
         className={`bg-white p-6 rounded-lg shadow-xl w-64 space-y-6 sm:block sm:w-1/4 sm:flex fixed top-0 left-0 bottom-0 z-50 sm:relative sm:h-full sm:translate-x-0 ${

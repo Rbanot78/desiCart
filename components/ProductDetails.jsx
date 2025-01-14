@@ -3,7 +3,7 @@ import { useApp } from "@/context/AppContext";
 import toast from 'react-hot-toast';
 import { useRouter } from "next/router";
 import { useCompare } from "@/context/CompareContext";
-import { FaRegClone } from 'react-icons/fa';
+import { FaRegClone, FaArrowLeft } from 'react-icons/fa'; // Added back icon
 
 const ProductDetails = ({ product }) => {
   const { addToCart, addToWishlist, isProductInCart, isProductInWishlist } = useApp();
@@ -51,11 +51,17 @@ const ProductDetails = ({ product }) => {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center ">
+          <button
+            onClick={() => router.back()} // Going back to the previous page
+            className="absolute mt-10 top-6 left-6 text-gray-800 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition duration-200"
+          >
+            <FaArrowLeft className="w-6 h-6" />
+          </button>
           <img
             src={mainImage}
             alt={product.title}
-            className="max-w-full h-auto rounded-lg shadow-xl hover:scale-105 transition-all duration-300"
+            className="max-w-full h-auto rounded-xl shadow-lg hover:scale-105 transition-transform duration-500"
           />
           <div className="flex justify-center mt-6 space-x-4">
             {product.images.slice(1).map((image, index) => (
@@ -63,7 +69,7 @@ const ProductDetails = ({ product }) => {
                 key={index}
                 src={image}
                 alt={`Thumbnail ${index + 1}`}
-                className="w-20 h-20 object-cover rounded-md border-2 border-transparent hover:border-blue-500 cursor-pointer transition-all duration-300"
+                className="w-20 h-20 object-cover rounded-lg border-2 border-transparent hover:border-blue-500 cursor-pointer transition-all duration-300"
                 onClick={() => setMainImage(image)}
               />
             ))}
@@ -73,28 +79,29 @@ const ProductDetails = ({ product }) => {
         <div className="space-y-6">
           <div className="flex space-x-4">
             <button
-              className="py-3 px-6 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition duration-300"
+              className={`py-3 px-6 rounded-full shadow-lg transition duration-300 w-full ${isProductInCart(product.id) ? 'bg-gray-400 text-gray-800 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
               onClick={handleAddToCart}
+              disabled={isProductInCart(product.id)}
             >
-              Add to Cart
+              {isProductInCart(product.id) ? 'In Cart' : 'Add to Cart'}
             </button>
             <button
-              className="py-3 px-6 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition duration-300"
+              className={`py-3 px-6 rounded-full shadow-lg transition duration-300 w-full ${isProductInWishlist(product.id) ? 'bg-gray-400 text-gray-800 cursor-not-allowed' : 'bg-pink-600 text-white hover:bg-pink-700'}`}
               onClick={handleAddToWishlist}
+              disabled={isProductInWishlist(product.id)}
             >
-              Add to Wishlist
+              {isProductInWishlist(product.id) ? 'In Wishlist' : 'Add to Wishlist'}
             </button>
             <button
-              className="py-3 px-6 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700 transition duration-300"
+              className={`flex items-center text-sm py-3 px-6 rounded-full transition duration-300 w-full ${compareItems.some((item) => item.id === product.id) || (compareItems.length > 0 && compareItems[0].category !== product.category) || compareItems.length >= 3 ? 'bg-gray-400 text-gray-800 cursor-not-allowed' : 'bg-green-600 text-white hover:bg-green-700'}`}
               onClick={handleAddToCompare}
               disabled={compareItems.some((item) => item.id === product.id) || (compareItems.length > 0 && compareItems[0].category !== product.category) || compareItems.length >= 3}
-              className={`flex items-center text-sm py-2 px-4 rounded-lg transition duration-300 ${compareItems.some((item) => item.id === product.id) || (compareItems.length > 0 && compareItems[0].category !== product.category) || compareItems.length >= 3 ? 'bg-gray-400 text-gray-800 cursor-not-allowed' : 'bg-green-600 text-white hover:bg-green-700'}`}
             >
               <FaRegClone className="mr-2" />
               {compareItems.some((item) => item.id === product.id) ? 'In Compare' : 'Compare'}
             </button>
           </div>
-          <h1 className="text-4xl font-semibold text-gray-900">{product.title}</h1>
+          <h1 className="text-3xl font-semibold text-gray-900">{product.title}</h1>
           <p className="text-lg text-gray-700">{product.description}</p>
 
           <div className="flex items-center space-x-4">
@@ -155,7 +162,7 @@ const ProductDetails = ({ product }) => {
 
           <div className="mt-6 flex space-x-4">
             <button
-              className="w-full py-3 px-6 bg-gray-200 text-gray-900 rounded-lg shadow-lg hover:bg-gray-300 transition duration-300"
+              className="w-full py-3 px-6 bg-gray-200 text-gray-900 rounded-full shadow-lg hover:bg-gray-300 transition duration-300"
             >
               Buy Now
             </button>

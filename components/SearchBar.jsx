@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSearch } from "../context/SearchContext";
 
-
 const SearchBar = () => {
   const { searchQuery, setSearchQuery, suggestions, debounceFetchSuggestions } = useSearch();
   const [isSuggestionsVisible, setIsSuggestionsVisible] = useState(false);
@@ -64,18 +63,17 @@ const SearchBar = () => {
     };
   }, [searchQuery]);
 
-  // Ensure default values for suggestions to prevent errors
   const products = suggestions.products || [];
   const categories = suggestions.categories || [];
 
   return (
-    <div ref={searchBarRef} className="relative w-full max-w-lg">
+    <div ref={searchBarRef} className="relative w-full max-w-lg ml-4">
       <div className="relative flex items-center">
         <input
           type="text"
           value={searchQuery}
           onChange={handleSearchInputChange}
-          className="w-full p-3 pl-10 border rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gradient-to-r from-gray-50 to-gray-100"
+          className="w-full p-3 pl-10 border rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
           placeholder="Search for products..."
         />
         <svg
@@ -135,8 +133,6 @@ const SearchBar = () => {
           )}
         </ul>
       )}
-
-     
     </div>
   );
 };

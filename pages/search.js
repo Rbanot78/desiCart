@@ -38,15 +38,18 @@ const SearchPage = () => {
     }
   }, [q, category]);
 
+  const pageTitle = q ? `Search results for "${q}"` : category ? `Category: ${category}` : 'Search Results';
+  const pageDescription = q ? `Search results for products related to "${q}"` : category ? `Products in the category "${category}"` : 'Search results for products and categories';
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <Head>
-        <title>Search Results</title>
-        <meta name="description" content="Search results for products and categories" />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
       </Head>
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-6">Search Results</h1>
+        <h1 className="text-3xl font-bold text-center mb-6">{pageTitle}</h1>
         {loading ? (
           <p className="text-center text-gray-500">Loading...</p>
         ) : error ? (

@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }) {
       <CompareProvider>
         <SearchProvider>
         <Toaster />
+        
           <Component {...pageProps} />
         </SearchProvider>
       </CompareProvider>
