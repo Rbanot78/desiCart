@@ -10,6 +10,7 @@ import WishlistDropdownContent from "./WishlistDropdownContent";
 import CompareDropdownContent from "./CompareDropdownContent";
 import SearchBar from "./SearchBar";
 
+
 const Navbar = () => {
   const { cartItems, wishlistItems } = useApp();
   const { compareItems } = useCompare();
@@ -17,9 +18,11 @@ const Navbar = () => {
   const [isWishlistDropdownOpen, setIsWishlistDropdownOpen] = useState(false);
   const [isCompareDropdownOpen, setIsCompareDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const cartRef = useRef(null);
   const wishlistRef = useRef(null);
   const compareRef = useRef(null);
+
 
   const handleClickOutside = useCallback((event) => {
     if (
@@ -58,12 +61,12 @@ const Navbar = () => {
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <Link href="/" className="text-2xl font-bold text-gray-900">
-                Brand
+              <Link href="/" className="text-2xl font-bold text-gray-900 flex items-center">
+                <span className="mr-2"><FiShoppingCart /></span>  desiCart
               </Link>
             </div>
           </div>
-          <SearchBar  className="m-4 p-4 scroll-m-7 sm"/>
+          <SearchBar className="m-4 p-4 scroll-m-7 sm" />
 
           <div className="flex items-center space-x-6">
             <div className="hidden md:flex relative">
@@ -128,6 +131,7 @@ const Navbar = () => {
                 title="Compare"
               />
             </div>
+
 
             <button
               onClick={toggleMobileMenu}

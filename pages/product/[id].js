@@ -36,20 +36,29 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const { id } = params;
+  try {
+    const { id } = params;
+    const product = await getProductById(id);
 
-  const product = await getProductById(id);
+    if (!product) {
+      return {
+        notFound: true,
+      };
+    }
 
-  if (!product) {
     return {
-      notFound: true,
+      props: { product },
+      revalidate: 60,
+    };
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    return {
+      redirect: {
+        destination: '/500',
+        permanent: false,
+      },
     };
   }
-
-  return {
-    props: { product },
-    revalidate: 60,
-  };
 };
 
 export default ProductPage;

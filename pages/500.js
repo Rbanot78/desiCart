@@ -5,7 +5,7 @@ const Custom500 = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-gray-100 to-gray-300 p-6">
       <div className="text-center">
-        <h1 className="text-9xl font-extrabold text-gray-800 animate-pulse mb-4">500</h1>
+        <h1 className="text-9xl font-extrabold text-gray-800 animate-bounce mb-4">500</h1>
         <p className="text-2xl text-gray-700 mb-6">Whoops! Something went wrong on our end.</p>
         <p className="text-lg text-gray-600 mb-10">
           We're working on it. Please try again later or return to the homepage.

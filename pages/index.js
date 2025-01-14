@@ -28,6 +28,7 @@ const Home = ({ categories, products, error }) => {
     <div className="min-h-screen bg-gray-100 p-6">
       <Head>
         <title>Home | Product Categories</title>
+
         <meta
           name="description"
           content="Explore our diverse range of product categories."
@@ -69,21 +70,25 @@ const Home = ({ categories, products, error }) => {
                   key={category.slug}
                   className="bg-white rounded-lg shadow-lg p-6 flex flex-col ml-6 items-center group relative w-full h-60 overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
                 >
-                  <Link href={`/category/${category.slug}`}>
-                    <Image
-                      src={`/images/${category.slug || category.name}.jpg`}
-                      alt={category.name}
-                      layout="fill"
-                      objectFit="cover"
-                      className="w-full h-32 object-contain rounded-md mb-4"
-                      onError={(e) => (e.target.src = "/default-thumbnail.jpg")}
-                    />
+                  <Link href={`/category/[slug]`} as={`/category/${category.slug}`}>
+                    <div>
+                      <Image
+                        src={`/images/${category.slug || category.name}.jpg`}
+                        alt={category.name}
+                        layout="fill"
+                        objectFit="cover"
+                        className="w-full h-32 object-contain rounded-md mb-4"
+                        onError={(e) => (e.target.src = "/default-thumbnail.jpg")}
+                      />
+                   </div>
                   </Link>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <Link href={`/category/${category.slug}`}>
-                      <h2 className="text-2xl font-bold text-white text-center px-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                        {category.name}
-                      </h2>
+                    <Link href={`/category/[slug]`} as={`/category/${category.slug}`}>
+                    <div>
+                        <h2 className="text-2xl font-bold text-white text-center px-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                          {category.name}
+                        </h2>
+                        </div>
                     </Link>
                   </div>
                 </div>
@@ -97,7 +102,7 @@ const Home = ({ categories, products, error }) => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context) => {
   try {
     const categories = await getCategories();
     const products = await getProducts();
@@ -110,13 +115,9 @@ export const getServerSideProps = async () => {
     };
   } catch (error) {
     console.error("Error fetching data:", error);
-    return {
-      props: {
-        categories: [],
-        products: [],
-        error: "Error fetching data. Please try again later.",
-      },
-    };
+    context.res.writeHead(302, { Location: '/500' });
+    context.res.end();
+    return { props: {} };
   }
 };
 

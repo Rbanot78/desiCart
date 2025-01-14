@@ -56,26 +56,26 @@ const CategoryPage = ({ products = [], category, error }) => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-4">
       <Head>
         <title>{category.name} - E-commerce</title>
         <meta name="description" content={`Browse products in the ${category.name} category`} />
         <meta name="keywords" content={`${category.name}, e-commerce, products`} />
       </Head>
       <Navbar />
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-4">
         <button
-          className="text-3xl text-gray-600"
+          className="text-2xl text-gray-600"
           onClick={() => window.history.back()} // Go back to the previous page
           aria-label="Go back"
         >
           <FaArrowLeft />
         </button>
-        <h1 className="text-3xl font-bold text-center sm:text-left">
+        <h1 className="text-2xl font-bold text-center sm:text-left">
           {category.name}
         </h1>
         <button
-          className="text-3xl text-gray-600 sm:hidden ml-4"
+          className="text-2xl text-gray-600 sm:hidden md:block ml-4"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           aria-label="Toggle filters"
         >
@@ -86,7 +86,7 @@ const CategoryPage = ({ products = [], category, error }) => {
       {/* Sidebar that is always visible on larger screens */}
       <div className="flex">
         <div
-          className={`w-full sm:w-1/4 mt-7 ${
+          className={`w-full sm:w-1/4 mt-4 ${
             isSidebarOpen ? "block" : "hidden"
           } sm:block`}
         >
@@ -108,7 +108,7 @@ const CategoryPage = ({ products = [], category, error }) => {
             </p>
           ) : (
             <div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                 {currentProducts.map((product) => (
                   <CategoryCard key={product.id} product={product} />
                 ))}
@@ -145,10 +145,9 @@ export const getServerSideProps = async ({ params }) => {
   } catch (error) {
     console.error("Error fetching category products:", error);
     return {
-      props: {
-        products: [],
-        category: null,
-        error: "Error fetching products. Please try again later.",
+      redirect: {
+        destination: '/500',
+        permanent: false,
       },
     };
   }

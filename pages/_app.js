@@ -11,7 +11,10 @@ function MyApp({ Component, pageProps }) {
     <AppProvider>
       <CompareProvider>
         <SearchProvider>
-        <Toaster />
+        <Toaster 
+          position="top-center"
+          reverseOrder={false}
+        />
         
           <Component {...pageProps} />
         </SearchProvider>

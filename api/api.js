@@ -20,7 +20,7 @@ export const getCategoryList = async () => {
 export const getProductsByCategory = async (categorySlug) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/products/category/${categorySlug}`);
-    console.log(response.data); // Log the response data to inspect its structure
+    // Log the response data to inspect its structure
     return response.data.products || [];  // Assuming products are inside a "products" field
   } catch (error) {
     console.error(`Error fetching products for category ${categorySlug}:`, error);

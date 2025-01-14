@@ -25,7 +25,7 @@ const FilterSidebar = ({ brands, onFilterChange, isSidebarOpen, setIsSidebarOpen
   }, [selectedBrands, minPrice, maxPrice]);
 
   return (
-    <div className="mb-6">
+    <div className="mb-6 mr-3">
       {/* Sidebar */}
       <div
         className={`bg-white p-6 rounded-lg shadow-xl w-64 space-y-6 sm:block sm:w-1/4 sm:flex fixed top-0 left-0 bottom-0 z-50 sm:relative sm:h-full sm:translate-x-0 ${
