@@ -59,7 +59,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <Link href="/" className="text-2xl font-bold text-gray-900">
-                desiCart
+               <span className="mr-2"><FiShoppingCart /></span>  desiCart
               </Link>
             </div>
           </div>
