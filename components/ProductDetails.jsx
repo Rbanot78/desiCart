@@ -61,7 +61,7 @@ const ProductDetails = ({ product }) => {
           <img
             src={mainImage}
             alt={product.title}
-            className="max-w-full h-auto rounded-xl shadow-lg hover:scale-105 transition-transform duration-500"
+            className="w-30 object-contain h-auto rounded-xl shadow-lg hover:scale-105 transition-transform duration-500"
           />
           <div className="flex justify-center mt-6 space-x-4">
             {product.images.slice(1).map((image, index) => (
@@ -69,7 +69,7 @@ const ProductDetails = ({ product }) => {
                 key={index}
                 src={image}
                 alt={`Thumbnail ${index + 1}`}
-                className="w-20 h-20 object-cover rounded-lg border-2 border-transparent hover:border-blue-500 cursor-pointer transition-all duration-300"
+                className="w-20 h-20 object-contain rounded-lg border-2 border-transparent hover:border-blue-500 cursor-pointer transition-all duration-300"
                 onClick={() => setMainImage(image)}
               />
             ))}
