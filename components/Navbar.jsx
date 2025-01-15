@@ -61,13 +61,8 @@ const Navbar = () => {
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-<<<<<<< HEAD
               <Link href="/" className="text-2xl font-bold text-gray-900 flex items-center">
                 <span className="mr-2"><FiShoppingCart /></span>  desiCart
-=======
-              <Link href="/" className="text-2xl font-bold text-gray-900">
-               <span className="mr-2"><FiShoppingCart /></span>  desiCart
->>>>>>> 244c50f760686b3f2dca670d335de42b25c4349c
               </Link>
             </div>
           </div>
