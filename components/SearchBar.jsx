@@ -105,7 +105,7 @@ const SearchBar = () => {
                   className="flex items-center gap-3 p-3 cursor-pointer hover:bg-blue-100 transition-all duration-200"
                   onClick={() => handleSuggestionClick(product)}
                 >
-               <Image
+                  <Image
                     src={product.images[0]}
                     alt={product.title}
                     width={40}
