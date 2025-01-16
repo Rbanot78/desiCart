@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSearch } from "../context/SearchContext";
+import Image from "next/image";
 
 const SearchBar = () => {
   const { searchQuery, setSearchQuery, suggestions, debounceFetchSuggestions } = useSearch();
@@ -104,7 +105,7 @@ const SearchBar = () => {
                   className="flex items-center gap-3 p-3 cursor-pointer hover:bg-blue-100 transition-all duration-200"
                   onClick={() => handleSuggestionClick(product)}
                 >
-                  <img
+               <Image
                     src={product.images[0]}
                     alt={product.title}
                     width={40}
